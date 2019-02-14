@@ -1,5 +1,5 @@
 require 'pry-byebug'
-require_relative './day7/worker'
+require_relative 'worker'
 
 a = []
 File.open('day7.input').each_line do |line|

@@ -40,7 +40,7 @@ tick = 0
 # end
 
 # PART 2
-# binding.pry
+#please consider the +2 -2 for the ticker
 until carts.length == 1
   carts.sort_by! { |first| first.y * 10000 + first.x }
   carts.each do |cart|

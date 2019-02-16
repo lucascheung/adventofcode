@@ -1,7 +1,8 @@
 require 'pry-byebug'
 require_relative 'recipe'
 
-puzzle_input = 22000000
+
+recipe_size = 22000000
 
 three = Recipe.new(3)
 seven = Recipe.new(7)
@@ -35,7 +36,7 @@ def arrange_two(new_one, new_two, first, last)
   last.next = new_one
 end
 
-(puzzle_input + 11).times do
+recipe_size.times do
   if next_add.to_s[1]
     add_one = next_add.to_s[0].to_i
     add_two = next_add.to_s[1].to_i
@@ -61,20 +62,18 @@ end
 end
 
 #PART ONE##############################################
-# recipe_start = first
-# (puzzle_input - 1).times { recipe_start = recipe_start.next }
+puzzle_input = 170641
+recipe_start = first
+(puzzle_input - 1).times { recipe_start = recipe_start.next }
 
 
-# final_num = ""
-# 10.times do
-#   recipe_start = recipe_start.next
-#   final_num += recipe_start.number.to_s
-# end
+final_num = ""
+10.times do
+  recipe_start = recipe_start.next
+  final_num += recipe_start.number.to_s
+end
 
-
-# puts final_num
-
-
+puts final_num
 
 
 #PART TWO###############################################
@@ -96,7 +95,6 @@ until matched
     matched = true
   else
     position += 1
-    puts position if position % 10000 == 0
     # puts matcher
     matcher = ""
     header = header.next
@@ -104,9 +102,6 @@ until matched
 end
 
 #20165733
-
-
-
 
 
 

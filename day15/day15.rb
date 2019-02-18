@@ -135,18 +135,50 @@ def closest_enemy_in_contact(unit)
   four_ops = [grid.up, grid.left, grid.right, grid.down]
   four_ops.each do |ops|
     if (unit.team == 'G' && ops.elf_in_grid) || (unit.team == 'E' && ops.goblin_in_grid)
-      return UNITS.find { |unit| unit.x == ops.x && unit.y == ops.y }
+      return UNITS.find { |c_unit| c_unit.x == ops.x && c_unit.y == ops.y }
     end
   end
 end
 
+def move(unit)
+  direction = find_closest_reachable(unit).origin
+  old_grid = MAP[unit.y][unit.x]
+  switch_nature(unit, old_grid, false)
+  unit.y -= 1 if direction == 'up'
+  unit.y += 1 if direction == 'down'
+  unit.x -= 1 if direction == 'left'
+  unit.x += 1 if direction == 'right'
+  new_grid = MAP[unit.y][unit.x]
+  switch_nature(unit, new_grid, true)
+end
+
+def switch_nature(unit, grid, boolean)
+  if unit.team == 'G'
+    grid.goblin_in_grid = boolean
+    grid.up.goblin_in_range = boolean
+    grid.down.goblin_in_range = boolean
+    grid.left.goblin_in_range = boolean
+    grid.right.goblin_in_range = boolean
+  elsif unit.team == 'E'
+    grid.elf_in_grid = boolean
+    grid.up.elf_in_range = boolean
+    grid.down.elf_in_range = boolean
+    grid.left.elf_in_range = boolean
+    grid.right.elf_in_range = boolean
+  end
+end
+
+def attack(unit_being_attacked)
+end
+
 
 UNITS.each do |unit|
-  puts unit
+  puts "------------#{unit}-------------"
   if in_contact_with_enemy?(unit)
-    puts closest_enemy_in_contact(unit)
-  else
-    puts find_closest_reachable(unit)
+    puts "#{closest_enemy_in_contact(unit)}---attack"
+  elsif !find_closest_reachable(unit).nil?
+    move(unit)
+    puts unit
   end
 end
 # puts reachables(MAP[GOBLINS[0].y][GOBLINS[0].x]).select {|grid| grid.goblin_in_range }[0]

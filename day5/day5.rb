@@ -1,7 +1,6 @@
 require 'pry-byebug'
 a = ''
 File.open('day5.input').each_line do |line|
-  # [1518-09-22 23:50] Guard #2309 begins shift
   a += line.delete("\n")
 end
 

@@ -1,5 +1,8 @@
 class Grid
-  attr_accessor :type, :x, :y, :in_range, :occupied, :up, :down, :left, :right, :distance, :goblin_in_range, :elf_in_range, :origin
+  attr_accessor :type, :x, :y, :in_range, :occupied
+  attr_accessor :up, :down, :left, :right, :distance
+  attr_accessor :goblin_in_range, :elf_in_range, :origin
+  attr_accessor :goblin_in_grid, :elf_in_grid
   def initialize(attributes)
     @type = attributes[:type]
     @x = attributes[:x]

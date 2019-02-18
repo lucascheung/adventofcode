@@ -45,15 +45,17 @@ end
   end
 end
 
-#Find units in range
+#Find units in range & in grid
 UNITS.each do |unit|
   position = MAP[unit.y][unit.x]
   if unit.team == 'G'
+    position.goblin_in_grid = true
     position.up.goblin_in_range = true if position.up.type == '.'
     position.right.goblin_in_range = true if position.right.type == '.'
     position.down.goblin_in_range = true if position.down.type == '.'
     position.left.goblin_in_range = true if position.left.type == '.'
   else
+    position.elf_in_grid = true
     position.up.elf_in_range = true if position.up.type == '.'
     position.right.elf_in_range = true if position.right.type == '.'
     position.down.elf_in_range = true if position.down.type == '.'
@@ -61,26 +63,6 @@ UNITS.each do |unit|
   end
 end
 
-# #Find goblins in range
-# GOBLINS.each do |goblin|
-#   position = MAP[goblin.y][goblin.x]
-#   position.up.goblin_in_range = true if position.up.type == '.'
-#   position.right.goblin_in_range = true if position.right.type == '.'
-#   position.down.goblin_in_range = true if position.down.type == '.'
-#   position.left.goblin_in_range = true if position.left.type == '.'
-# end
-
-# #find elfs in range
-# ELFS.each do |elf|
-#   position = MAP[elf.y][elf.x]
-#   position.up.elf_in_range = true if position.up.type == '.'
-#   position.right.elf_in_range = true if position.right.type == '.'
-#   position.down.elf_in_range = true if position.down.type == '.'
-#   position.left.elf_in_range = true if position.left.type == '.'
-# end
-
-# GOBLINS.each { |g| puts g }
-# ELFS.each { |g| puts g }
 # MAP.each { |k,v| puts v.values }
 
 def reachables(current)
@@ -139,9 +121,34 @@ def find_closest_reachable(unit)
   end
 end
 
+def in_contact_with_enemy?(unit)
+  unit_grid = MAP[unit.y][unit.x]
+  if unit.team == 'G'
+    return true if unit_grid.elf_in_range == true
+  elsif unit.team == 'E'
+    return true if unit_grid.goblin_in_range == true
+  end
+end
 
-puts UNITS[16]
-puts find_closest_reachable(UNITS[16])
+def closest_enemy_in_contact(unit)
+  grid = MAP[unit.y][unit.x]
+  four_ops = [grid.up, grid.left, grid.right, grid.down]
+  four_ops.each do |ops|
+    if (unit.team == 'G' && ops.elf_in_grid) || (unit.team == 'E' && ops.goblin_in_grid)
+      return UNITS.find { |unit| unit.x == ops.x && unit.y == ops.y }
+    end
+  end
+end
+
+
+UNITS.each do |unit|
+  puts unit
+  if in_contact_with_enemy?(unit)
+    puts closest_enemy_in_contact(unit)
+  else
+    puts find_closest_reachable(unit)
+  end
+end
 # puts reachables(MAP[GOBLINS[0].y][GOBLINS[0].x]).select {|grid| grid.goblin_in_range }[0]
 
 

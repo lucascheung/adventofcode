@@ -1,5 +1,5 @@
 class Grid
-  attr_accessor :type, :x, :y, :in_range, :occupied, :up, :down, :left, :right, :distance, :goblin_in_range, :elf_in_range
+  attr_accessor :type, :x, :y, :in_range, :occupied, :up, :down, :left, :right, :distance, :goblin_in_range, :elf_in_range, :origin
   def initialize(attributes)
     @type = attributes[:type]
     @x = attributes[:x]
@@ -10,6 +10,6 @@ class Grid
   end
 
   def to_s
-    "[#{@x}, #{@y}] | type: #{@type} | occupied: #{@occupied} | distance: #{@distance}"
+    "[#{@x}, #{@y}] | type: #{@type} | occupied: #{@occupied} | distance: #{@distance} | origin: #{origin}"
   end
 end

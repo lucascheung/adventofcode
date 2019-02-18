@@ -10,9 +10,6 @@ class Unit
   def attack
   end
 
-  def move
-  end
-
   def to_s
     "#{@team} [#{@x}, #{@y}] hp:#{@hp}"
   end

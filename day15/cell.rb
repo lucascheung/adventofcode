@@ -1,5 +1,5 @@
-class Grid
-  attr_accessor :type, :x, :y, :in_range, :occupied
+class Cell
+  attr_accessor :type, :x, :y, :occupied
   attr_accessor :up, :down, :left, :right, :distance
   attr_accessor :goblin_in_range, :elf_in_range, :origin
   attr_accessor :goblin_in_grid, :elf_in_grid
